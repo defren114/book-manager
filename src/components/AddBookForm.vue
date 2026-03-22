@@ -1,14 +1,42 @@
 <template>
-  <form @submit.prevent="handleSubmit" class="add-form">
-    <h2>Добавить новую книгу</h2>
-    <div class="form-group">
-      <input v-model="formData.title" type="text" placeholder="Название книги" required />
+  <form @submit.prevent="handleSubmit" class="card p-4 mb-4">
+    <h4 class="mb-3">Добавить новую книгу</h4>
+    <div class="mb-3">
+      <input 
+        v-model="formData.title" 
+        type="text" 
+        class="form-control" 
+        placeholder="Название книги" 
+        required 
+      />
     </div>
-    <div class="form-group">
-      <input v-model="formData.author" type="text" placeholder="Автор" required />
+    <div class="mb-3">
+      <input 
+        v-model="formData.author" 
+        type="text" 
+        class="form-control" 
+        placeholder="Автор" 
+        required 
+      />
     </div>
-    <div class="form-group">
-      <select v-model="formData.genre" required>
+    <div class="mb-3">
+      <input 
+        v-model="formData.cover" 
+        type="url" 
+        class="form-control" 
+        placeholder="Ссылка на обложку (URL)" 
+      />
+    </div>
+    <div class="mb-3">
+      <textarea 
+        v-model="formData.description" 
+        class="form-control" 
+        placeholder="Описание книги" 
+        rows="3"
+      ></textarea>
+    </div>
+    <div class="mb-3">
+      <select v-model="formData.genre" class="form-select" required>
         <option value="">Выберите жанр</option>
         <option value="Роман">Роман</option>
         <option value="Фантастика">Фантастика</option>
@@ -17,7 +45,7 @@
         <option value="Поэзия">Поэзия</option>
       </select>
     </div>
-    <button type="submit" class="btn-submit">Добавить книгу</button>
+    <button type="submit" class="btn btn-success w-100">Добавить книгу</button>
   </form>
 </template>
 
@@ -27,56 +55,16 @@ const emit = defineEmits(['add-book'])
 const formData = reactive({
   title: '',
   author: '',
-  genre: ''
+  genre: '',
+  cover: '',
+  description: ''
 })
 const handleSubmit = () => {
   emit('add-book', { ...formData })
   formData.title = ''
   formData.author = ''
   formData.genre = ''
+  formData.cover = ''
+  formData.description = ''
 }
 </script>
-
-<style scoped>
-.add-form {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
-}
-.add-form h2 {
-  margin-bottom: 15px;
-  color: #333;
-}
-.form-group {
-  margin-bottom: 15px;
-}
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1em;
-}
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: #4CAF50;
-}
-.btn-submit {
-  width: 100%;
-  padding: 12px;
-  background: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1em;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-.btn-submit:hover {
-  background: #45a049;
-}
-</style>
